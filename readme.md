@@ -33,6 +33,7 @@ If you use Windows/Linux or you simple don't like it, you can disable the transl
     win = new BrowserWindow({width: 1000, height: 800, titleBarStyle: 'hidden', title: 'Home Assistant'})
 
 to
+
     win = new BrowserWindow({width: 1000, height: 800, title: 'Home Assistant'})
 
 in 'index.js'

@@ -2,13 +2,16 @@ Create Home Assistant Electron app
 ==================================
 
 
-##1) Download electron
+![](https://abload.de/img/screenshot2017-04-17abalow.png)
+
+
+## 1) Download electron
 
 
 
     $ sudo npm install electron -g
 
-##2) Modify HTML file
+## 2) Modify HTML file
 
 
 Open 'index.html' and change this line 
@@ -21,7 +24,7 @@ to your own Home Assistant URL.
 If you use a modified Home Assistant design, you can change the titlebar color and background color in the CSS.
 
 
-##3) Change titlebar style (optional)
+## 3) Change titlebar style (optional)
 
 
 
@@ -35,7 +38,7 @@ to
 in 'index.js'
 
 
-##4) Test it
+## 4) Test it
 
 
 
@@ -46,7 +49,7 @@ Just type
 in your terminal. Make sure, you are in the right working directory.
 
 
-##5) Build
+## 5) Build
 
 
 Use [this](https://electron.atom.io/docs/tutorial/application-distribution/) instructions to create your app package.

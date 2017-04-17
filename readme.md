@@ -16,7 +16,7 @@ Create Home Assistant Electron app
 
 Open 'index.html' and change this line 
 
-    <iframe src="http://raspi3:8123" width="100%" height="100%" frameborder="0">
+    <iframe src="http://raspi3:8123" frameborder="0">
 
 to your own Home Assistant URL.
 

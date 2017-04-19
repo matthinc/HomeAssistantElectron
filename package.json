@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/matthinc/HomeAssistantElectron/issues"
   },
-  "homepage": "https://github.com/matthinc/HomeAssistantElectron#readme"
+  "homepage": "https://github.com/matthinc/HomeAssistantElectron#readme",
+  "dependencies": {
+    "electron": "^1.6.5"
+  }
 }

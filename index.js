@@ -1,7 +1,8 @@
 const {app, BrowserWindow} = require('electron')
-const path = require('path')
-const url = require('url')
-const config = require(__dirname + '/config.js')
+const path    = require('path')
+const url     = require('url')
+const os      = require('os')
+const config  = require(__dirname + '/config.js')
 
 var win = undefined
 
@@ -22,6 +23,7 @@ function createWindow () {
   }))
 
   win.url = config.url
+  win.os  = os.platform()
 
   win.on('closed', () => {
     win = null

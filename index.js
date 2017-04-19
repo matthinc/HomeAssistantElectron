@@ -5,7 +5,7 @@ const url = require('url')
 var win = undefined
 
 function createWindow () {
-  win = new BrowserWindow({width: 1000, height: 800, titleBarStyle: 'hidden', title: 'Home Assistant', icon: 'icon.png'})
+  win = new BrowserWindow({width: 1000, height: 800, titleBarStyle: 'hidden', title: 'Home Assistant', icon: 'assets/icon.png'})
 
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),

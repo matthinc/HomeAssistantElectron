@@ -4,7 +4,10 @@
   "description": "Create Home Assistant Electron app ==================================",
   "main": "index.js",
   "scripts": {
-    "test": "electron index.js"
+    "test": "electron index.js",
+    "build_mac": "build -c electron-builder.yml --mac",
+    "build_linux": "build -c electron-builder.yml --linux",
+    "build_windows": "build -c electron-builder.yml --win"
   },
   "repository": {
     "type": "git",
@@ -16,7 +19,9 @@
     "url": "https://github.com/matthinc/HomeAssistantElectron/issues"
   },
   "homepage": "https://github.com/matthinc/HomeAssistantElectron#readme",
-  "dependencies": {
-    "electron": "^1.6.5"
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^1.6.5",
+    "electron-builder": "^17.0.1"
   }
 }

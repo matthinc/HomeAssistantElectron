@@ -32,6 +32,9 @@ If you use a modified Home Assistant design, you can change the titlebar color a
 ## 4) Build
 
 
-Use [this](https://electron.atom.io/docs/tutorial/application-distribution/) instructions to create your app package.
-If you use Mac, you can edit 'Electron.app/Contents/Info.plist' to change the app name in the menu bar
+    $ npm run-script build_mac   
+
+    $ npm run-script build_windows
+
+    $ npm run-script build_linux
 

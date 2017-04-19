@@ -1,0 +1,11 @@
+appId: "com.example.homeassistant"
+files:
+- index.html
+- index.js
+- assets/icon.png
+asar: true
+mac:
+  icon: assets/icon.icns
+win:
+  icon: assets/icon.ico
+

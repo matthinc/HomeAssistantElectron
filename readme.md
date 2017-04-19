@@ -1,4 +1,4 @@
-Create Home Assistant Electron app
+Home Assistant Electron app
 ==================================
 
 

@@ -13,19 +13,27 @@
                 display: block;
                 background-color: #03A9F4;
             }
-            iframe {
+            webview {
                 height: calc(100% - 25px);
                 width: 100%;
             }
         </style>
+
+        <script>
+            const remote = require('electron').remote
+            var frame
+
+            window.onload =() => {
+                frame = document.getElementById('content_frame')
+                frame.src = remote.getCurrentWindow().url
+            }
+        </script>
+
     </head>
     <body>
         <div id="titlebar"></div>
 
-        <!-- replace with your own home-assistant URL! -->
-        <iframe src="http://raspi3:8123" frameborder="0">
-
-
+        <webview id="content_frame" frameborder="0">
 
     </body>
 </html>

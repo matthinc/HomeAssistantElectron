@@ -2,6 +2,7 @@ appId: "com.example.homeassistant"
 files:
 - index.html
 - index.js
+- config.js
 - assets/icon.png
 asar: true
 mac:

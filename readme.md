@@ -10,17 +10,10 @@ Create Home Assistant Electron app
 
     $ npm install
 
-## 2) Modify HTML file
+## 2) Configure
 
 
-Open 'index.html' and change this line 
-
-    <iframe src="http://raspi3:8123" frameborder="0">
-
-to your own Home Assistant URL.
-
-
-If you use a modified Home Assistant design, you can change the titlebar color and background color in the CSS.
+Open 'config.js' and change anything you like (at least the URL)
 
 
 ## 3) Test it

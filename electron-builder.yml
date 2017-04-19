@@ -6,6 +6,8 @@ files:
 - config.js
 - assets/icon.png
 asar: true
+linux:
+  icon: assets/linux/
 mac:
   icon: assets/icon.icns
 win:

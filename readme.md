@@ -1,8 +1,8 @@
-Create Home Assistant Electron app
+Home Assistant Electron app
 ==================================
 
 
-![](https://abload.de/img/screenshot2017-04-17abalow.png)
+![](https://abload.de/img/home_assistantsfu4h.png)
 
 
 ## 1) Install dependencies

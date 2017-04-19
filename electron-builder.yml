@@ -1,6 +1,7 @@
 appId: "com.example.homeassistant"
 files:
-- index.html
+- src/index.html
+- src/script.js
 - index.js
 - config.js
 - assets/icon.png

@@ -10,7 +10,7 @@ function createWindow () {
 
   win = new BrowserWindow({
       height: config.size.height,
-      icon: 'assets/icon.png',
+      icon: 'assets/icon.ico',
       kiosk: config.kiosk,
       title: config.title,
       titleBarStyle: 'hidden',

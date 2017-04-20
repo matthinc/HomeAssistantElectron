@@ -1,19 +1,20 @@
 const {app, BrowserWindow} = require('electron')
-const path    = require('path')
-const url     = require('url')
-const os      = require('os')
-const config  = require(__dirname + '/config.js')
+const path = require('path')
+const url = require('url')
+const os = require('os')
+const config = require(__dirname + '/config.js')
 
 var win = undefined
 
 function createWindow () {
 
   win = new BrowserWindow({
+      height: config.size.height,
+      icon: 'assets/icon.png',
+      kiosk: config.kiosk,
+      title: config.title,
+      titleBarStyle: 'hidden',
       width: config.size.width,
-      height: config.size.height, 
-      titleBarStyle: 'hidden', 
-      title: config.title, 
-      icon: 'assets/icon.png'
   })
 
   win.loadURL(url.format({

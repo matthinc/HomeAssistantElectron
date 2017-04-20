@@ -1,12 +1,14 @@
-//Your Home Assistant URL/IP
+// Your Home Assistant URL/IP address
 const url = 'http://raspi3:8123'
 
-//Default window size
+// Default window size
 const size = {width: 1000, height: 800}
 
-//Window title
+// Run in kiosk mode (fullscreen and window size has no effect)
+const kiosk = false
+
+// Window title
 const title = 'Home Assistant'
 
 
-
-module.exports = {url, size, title}
+module.exports = {url, size, kiosk, title}

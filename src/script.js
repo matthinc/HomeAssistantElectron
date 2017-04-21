@@ -1,4 +1,4 @@
-const remote = require('electron').remote
+const {remote, ipcRenderer} = require('electron')
 
 window.onload =() => {
     var frame = document.getElementById('content_frame')
@@ -10,3 +10,8 @@ window.onload =() => {
         titlebar.parentNode.removeChild(titlebar)
     }
 }
+
+ipcRenderer.on('load', (event, data) => {
+    var frame = document.getElementById('content_frame')
+    frame.src = data.url
+})

@@ -2,19 +2,18 @@ const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
 const os = require('os')
-const config = require(__dirname + '/config.js')
+const config = require(path.join(__dirname, '/config.js'))
 
-var win = undefined
+var win
 
 function createWindow () {
-
   win = new BrowserWindow({
-      height: config.size.height,
-      icon: 'assets/icon.ico',
-      kiosk: config.kiosk,
-      title: config.title,
-      titleBarStyle: 'hidden',
-      width: config.size.width,
+    height: config.size.height,
+    icon: 'assets/icon.ico',
+    kiosk: config.kiosk,
+    title: config.title,
+    titleBarStyle: 'hidden',
+    width: config.size.width
   })
 
   win.loadURL(url.format({
@@ -24,14 +23,14 @@ function createWindow () {
   }))
 
   win.url = config.url
-  win.os  = os.platform()
+  win.os = os.platform()
 
   win.on('closed', () => {
     win = null
   })
 
   if (config.menu) {
-   create_menu()
+    createMenu()
   }
 }
 
@@ -52,59 +51,59 @@ app.on('activate', () => {
 /**
  * Create the application menu
  */
-function create_menu() {
-  let menu_template = [
+function createMenu () {
+  let menuTemplate = [
+    {
+      label: 'Go',
+      submenu: [
+        {
+          label: 'States',
+          click: () => {
+            win.webContents.send('load', {url: config.url + '/states'})
+          }
+        },
+        {
+          label: 'History',
+          click: () => {
+            win.webContents.send('load', {url: config.url + '/history'})
+          }
+        },
+        {
+          label: 'Map',
+          click: () => {
+            win.webContents.send('load', {url: config.url + '/map'})
+          }
+        },
+        {
+          label: 'Services',
+          click: () => {
+            win.webContents.send('load', {url: config.url + '/dev-service'})
+          }
+        }
+      ]
+    },
+    {
+      label: 'Developer',
+      submenu: [
+        {role: 'toggledevtools'}
+      ]
+    }
+  ]
+    // Mac default menu
+  if (os.platform() === 'darwin') {
+    menuTemplate.unshift(
       {
-        label: 'Go',
+        label: 'Home Assistant',
         submenu: [
           {
-            label: 'States',
-            click: () => {
-              win.webContents.send('load', {url: config.url + '/states'})
-            }
+            role: 'about'
           },
           {
-            label: 'History',
-            click: () => {
-              win.webContents.send('load', {url: config.url + '/history'})
-            }
-          },
-          {
-            label: 'Map',
-            click: () => {
-              win.webContents.send('load', {url: config.url + '/map'})
-            }
-          },
-          {
-            label: 'Services',
-            click: () => {
-              win.webContents.send('load', {url: config.url + '/dev-service'})
-            }
+            role: 'quit'
           }
         ]
-      },
-      {
-        label: 'Developer',
-        submenu: [
-          {role: 'toggledevtools'}
-        ]
-      }
-    ]
-    // Mac default menu
-    if (os.platform() == 'darwin') {
-      menu_template.unshift(
-        {
-          label: 'Home Assistant',
-          submenu: [
-            {
-              role: 'about'
-            },
-            {
-              role: 'quit'
-            }
-          ]
       })
-    }
-    const menu = Menu.buildFromTemplate(menu_template)
-    Menu.setApplicationMenu(menu)
+  }
+  const menu = Menu.buildFromTemplate(menuTemplate)
+  Menu.setApplicationMenu(menu)
 }

@@ -13,5 +13,4 @@ const title = 'Home Assistant'
 // Show menu
 const menu = true
 
-
 module.exports = {url, size, kiosk, title, menu}

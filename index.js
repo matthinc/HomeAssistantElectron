@@ -2,6 +2,7 @@ const {app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
 const os = require('os')
+const storage = require('electron-json-storage')
 const config = require(path.join(__dirname, '/config.js'))
 
 var win
@@ -16,14 +17,33 @@ function createWindow () {
     width: config.size.width
   })
 
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'src', 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
   win.url = config.url
   win.os = os.platform()
+
+  // Show connect-view if config.url is undefined
+  if (config.url) {
+    win.url = config.url
+    load('index.html')
+  } else {
+    // Try to load config from json file
+    storage.get('config', (err, data) => {
+      if (!err && data.url) {
+        config.url = data.url
+        win.url = data.url
+        load('index.html')
+      } else {
+        // show connect-view if config was not found in the json
+        load('connect.html')
+      }
+    })
+  }
+
+  win.connect = (url) => {
+    config.url = url
+    win.url = url
+    storage.set('config', {url})
+    load('index.html')
+  }
 
   win.on('closed', () => {
     win = null
@@ -85,7 +105,15 @@ function createMenu () {
     {
       label: 'Developer',
       submenu: [
-        {role: 'toggledevtools'}
+        {
+          role: 'toggledevtools'
+        },
+        {
+          label: 'Reset configuration',
+          click: () => {
+            storage.set('config', {})
+          }
+        }
       ]
     }
   ]
@@ -106,4 +134,12 @@ function createMenu () {
   }
   const menu = Menu.buildFromTemplate(menuTemplate)
   Menu.setApplicationMenu(menu)
+}
+
+function load (html) {
+  win.loadURL(url.format({
+    pathname: path.join(__dirname, 'src', html),
+    protocol: 'file:',
+    slashes: true
+  }))
 }

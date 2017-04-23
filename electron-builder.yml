@@ -1,15 +1,17 @@
 appId: "com.example.homeassistant"
+productName: "Home Assistant"
 files:
-- src/index.html
-- src/script.js
+- "src/**/*"
 - index.js
 - config.js
 - assets/icon.png
-asar: true
+- "node_modules/**/*"
+asar: false
 linux:
   icon: assets/linux/
 mac:
   icon: assets/icon.icns
+  target: zip
 win:
   icon: assets/icon.ico
 

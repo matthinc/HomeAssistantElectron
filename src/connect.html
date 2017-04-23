@@ -1,0 +1,81 @@
+
+<html>
+    <head>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+            body {
+                margin: 0px;
+                background-color: white;
+                height: 100%; 
+                overflow: hidden
+            }
+            #titlebar {
+                -webkit-app-region:drag;
+                height: 25px;
+                display: block;
+            }
+            h2 {
+                color: #03A9F4;
+                font-family: 'Roboto';
+                font-weight: 300;
+                font-size: 23px;
+                margin-top: 150px;
+                display: block;
+                text-align: center;
+            }
+            input {
+                border: none;
+                border-bottom: 1px solid #999;
+                padding: 10px;
+                background-color: transparent;
+                min-width: 300px;
+                color: black;
+                font-family: 'courier';
+                font-size: 15px;
+            }
+            input:focus {
+                outline: none;
+            }
+            #container {
+                display: block;
+                text-align: center;
+                margin-top: 70px;
+            }
+            button {
+                border: none;
+                outline: none;
+                background-color: #03A9F4;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: hand;
+            }
+            button:hover {
+                background-color: #3ab8f2;
+            }
+            #status {
+                font-family: 'Roboto';
+                margin-top: 20px;
+                font-size: 12px;
+            }
+        </style>
+
+        <script src="connect.js"></script>
+
+    </head>
+    <body>
+        <div id="titlebar"></div>
+        <h2>Connect to Home Assistant</h2>
+        <div id="container">
+            <input id="url-input" value="http://localhost:8123" placeholder="URL"><br>
+        </div>
+         <div id="container">
+            <div>
+                <button onclick="connect()">Connect</button>
+            </div>
+            <div id="status">
+                
+            </div>
+         </div>
+    </body>
+</html>

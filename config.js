@@ -1,5 +1,6 @@
 // Your Home Assistant URL/IP address
-const url = 'http://raspi3:8123'
+//When undefined, a connection-dialog is displayed at the first start
+const url = undefined
 
 // Default window size
 const size = {width: 1000, height: 800}

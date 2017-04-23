@@ -79,25 +79,33 @@ function createMenu () {
         {
           label: 'States',
           click: () => {
-            win.webContents.send('load', {url: config.url + '/states'})
+            if (win.url) {
+              win.webContents.send('load', {url: config.url + '/states'})
+            }
           }
         },
         {
           label: 'History',
           click: () => {
-            win.webContents.send('load', {url: config.url + '/history'})
+            if (win.url) {
+              win.webContents.send('load', {url: config.url + '/history'})
+            }
           }
         },
         {
           label: 'Map',
           click: () => {
-            win.webContents.send('load', {url: config.url + '/map'})
+            if (win.url) {
+              win.webContents.send('load', {url: config.url + '/map'})
+            }
           }
         },
         {
           label: 'Services',
           click: () => {
-            win.webContents.send('load', {url: config.url + '/dev-service'})
+            if (win.url) {
+              win.webContents.send('load', {url: config.url + '/dev-service'})
+            }
           }
         }
       ]

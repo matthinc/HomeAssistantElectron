@@ -111,6 +111,17 @@ function createMenu () {
       ]
     },
     {
+      label: 'Edit',
+      submenu: [
+        {
+          role: 'copy'
+        },
+        {
+          role: 'paste'
+        }
+      ]
+    },
+    {
       label: 'Developer',
       submenu: [
         {

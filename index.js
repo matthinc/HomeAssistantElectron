@@ -121,6 +121,7 @@ function createMenu () {
         }
       ]
     },
+
     {
       label: 'Developer',
       submenu: [

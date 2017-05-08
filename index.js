@@ -80,7 +80,7 @@ function createMenu () {
       label: 'States',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: config.url + '/states' })
+          win.webContents.send('load', { url: win.url + '/states' })
         }
       }
     },
@@ -88,7 +88,7 @@ function createMenu () {
       label: 'History',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: config.url + '/history' })
+          win.webContents.send('load', { url: win.url + '/history' })
         }
       }
     },
@@ -96,7 +96,7 @@ function createMenu () {
       label: 'Map',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: config.url + '/map' })
+          win.webContents.send('load', { url: win.url + '/map' })
         }
       }
     },
@@ -104,7 +104,7 @@ function createMenu () {
       label: 'Services',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: config.url + '/dev-service' })
+          win.webContents.send('load', { url: win.url + '/dev-service' })
         }
       }
     }

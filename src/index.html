@@ -1,31 +1,36 @@
 <html>
-    <head>
-        <style>
-            body {
-                margin: 0px;
-                background-color: #e5e5e5;
-                height: 100%; 
-                overflow: hidden
-            }
-            #titlebar {
-                -webkit-app-region:drag;
-                height: 25px;
-                display: block;
-                background-color: #03A9F4;
-            }
-            webview {
-                height: calc(100% - 25px);
-                width: 100%;
-            }
-        </style>
 
-        <script src="script.js"></script>
+<head>
+    <style>
+        body {
+            margin: 0px;
+            background-color: #e5e5e5;
+            height: 100%;
+            overflow: hidden
+        }
+        
+        #titlebar {
+            -webkit-app-region: drag;
+            height: 25px;
+            display: block;
+            background-color: #03A9F4;
+        }
+        
+        webview {
+            height: calc(100% - 25px);
+            width: 100%;
+        }
+    </style>
 
-    </head>
-    <body>
-        <div id="titlebar"></div>
+    <script src="script.js"></script>
 
-        <webview id="content_frame" frameborder="0">
+</head>
 
-    </body>
+<body>
+    <div id="titlebar"></div>
+
+    <webview id="content_frame" frameborder="0" preload="./preload.js">
+
+</body>
+
 </html>

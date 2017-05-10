@@ -7,7 +7,6 @@ const config = require(path.join(__dirname, '/config.js'))
 
 var win
 
-
 function createWindow () {
   win = new BrowserWindow({
     height: config.size.height,
@@ -164,7 +163,6 @@ function load (html) {
   }))
 }
 
-
-function setPage(page) {
+function setPage (page) {
   win.webContents.send('change', { page })
 }

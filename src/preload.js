@@ -14,7 +14,7 @@ function login () {
 }
 
 // Change page (states,history, ...)
-function setPage(page) {
+function setPage (page) {
   document
     .querySelector('home-assistant').shadowRoot
     .querySelector('home-assistant-main').shadowRoot

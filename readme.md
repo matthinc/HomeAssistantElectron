@@ -15,12 +15,7 @@ You can find the first releases [here](https://github.com/matthinc/HomeAssistant
 
 ## 2) Configure
 
-Open `config.js` and change anything you like. At least modifiy the URL to point of your Home Assistant instance.
-
-```js
-//Your Home Assistant URL/IP
-const url = 'http://[IP_address/URL]:8123'
-```
+Open `config.js` and change anything you like.
 
 ## 3) Test it
 
@@ -31,7 +26,7 @@ const url = 'http://[IP_address/URL]:8123'
 ## 4) Build
 
 
-    $ npm run-script build_mac   
+    $ npm run-script build_mac
 
     $ npm run-script build_windows
 
@@ -43,4 +38,4 @@ If the build process is successfully finished then you will find the AppImage in
 
 Eg. on a Linux-based system:
 
-    $ ./dist/home_assistant_electron-1.0.0-x86_64.AppImage
+    $ ./dist/home_assistant_electron-0.2.0-x86_64.AppImage

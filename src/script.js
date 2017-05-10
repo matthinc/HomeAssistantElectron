@@ -15,3 +15,8 @@ ipcRenderer.on('load', (event, data) => {
   var frame = document.getElementById('content_frame')
   frame.src = data.url
 })
+
+ipcRenderer.on('change', (event, data) => {
+  var frame = document.getElementById('content_frame')
+  frame.send('change', data)
+})

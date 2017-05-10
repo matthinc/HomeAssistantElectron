@@ -7,6 +7,7 @@ const config = require(path.join(__dirname, '/config.js'))
 
 var win
 
+
 function createWindow () {
   win = new BrowserWindow({
     height: config.size.height,
@@ -80,7 +81,7 @@ function createMenu () {
       label: 'States',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: win.url + '/states' })
+          setPage('states')
         }
       }
     },
@@ -88,7 +89,7 @@ function createMenu () {
       label: 'History',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: win.url + '/history' })
+          setPage('history')
         }
       }
     },
@@ -96,7 +97,7 @@ function createMenu () {
       label: 'Map',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: win.url + '/map' })
+          setPage('map')
         }
       }
     },
@@ -104,7 +105,7 @@ function createMenu () {
       label: 'Services',
       click: () => {
         if (win.url) {
-          win.webContents.send('load', { url: win.url + '/dev-service' })
+          setPage('dev-service')
         }
       }
     }
@@ -161,4 +162,9 @@ function load (html) {
     protocol: 'file:',
     slashes: true
   }))
+}
+
+
+function setPage(page) {
+  win.webContents.send('change', { page })
 }

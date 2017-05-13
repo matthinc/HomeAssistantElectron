@@ -1,4 +1,4 @@
-const {remote, ipcRenderer} = require('electron')
+const {remote, ipcRenderer, shell} = require('electron')
 
 window.onload = () => {
   var frame = document.getElementById('content_frame')
@@ -9,6 +9,11 @@ window.onload = () => {
   if (remote.getCurrentWindow().os !== 'darwin') {
     titlebar.parentNode.removeChild(titlebar)
   }
+
+  frame.addEventListener('new-window', (event) => {
+    shell.openExternal(event.url)
+    event.preventDefault()
+  })
 }
 
 ipcRenderer.on('load', (event, data) => {

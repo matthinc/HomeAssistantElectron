@@ -5,10 +5,10 @@ const os = require('os')
 const storage = require('electron-json-storage')
 const config = require(path.join(__dirname, '/config.js'))
 
-var win
+var browserWindow
 
 function createWindow () {
-  win = new BrowserWindow({
+  browserWindow = new BrowserWindow({
     height: config.size.height,
     icon: 'assets/icon.ico',
     kiosk: config.kiosk,
@@ -17,21 +17,21 @@ function createWindow () {
     width: config.size.width
   })
 
-  win.url = config.url
-  win.os = os.platform()
-  win.password = ''
+  browserWindow.url = config.url
+  browserWindow.os = os.platform()
+  browserWindow.password = ''
 
     // Show connect-view if config.url is undefined
   if (config.url) {
-    win.url = config.url
-    win.password = config.password
+    browserWindow.url = config.url
+    browserWindow.password = config.password
     load('index.html')
   } else {
         // Try to load config from json file
     storage.get('config', (err, data) => {
       if (!err && data.url) {
-        win.url = data.url
-        win.password = data.password
+        browserWindow.url = data.url
+        browserWindow.password = data.password
         load('index.html')
       } else {
                 // show connect-view if config was not found in the json
@@ -40,15 +40,15 @@ function createWindow () {
     })
   }
 
-  win.connect = (url, password) => {
-    win.url = url
-    win.password = password
+  browserWindow.connect = (url, password) => {
+    browserWindow.url = url
+    browserWindow.password = password
     storage.set('config', { url, password })
     load('index.html')
   }
 
-  win.on('closed', () => {
-    win = null
+  browserWindow.on('closed', () => {
+    browserWindow = null
   })
 
   if (config.menu) {
@@ -65,7 +65,7 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  if (win === null) {
+  if (browserWindow === null) {
     createWindow()
   }
 })
@@ -76,65 +76,26 @@ app.on('activate', () => {
 function createMenu () {
   let menuTemplate = [{
     label: 'Go',
-    submenu: [{
-      label: 'States',
-      click: () => {
-        if (win.url) {
-          setPage('states')
-        }
-      }
-    },
-    {
-      label: 'History',
-      click: () => {
-        if (win.url) {
-          setPage('history')
-        }
-      }
-    },
-    {
-      label: 'Map',
-      click: () => {
-        if (win.url) {
-          setPage('map')
-        }
-      }
-    },
-    {
-      label: 'Services',
-      click: () => {
-        if (win.url) {
-          setPage('dev-service')
-        }
-      }
-    }
+    submenu: [
+      {label: 'States', click: () => setPage('states')},
+      {label: 'History', click: () => setPage('history')},
+      {label: 'Map', click: () => setPage('map')},
+      {label: 'Services', click: () => setPage('dev-service')}
     ]
   },
   {
     label: 'Edit',
-    submenu: [{
-      role: 'copy'
-    },
-    {
-      role: 'selectall'
-    },
-    {
-      role: 'paste'
-    }
+    submenu: [
+      {role: 'copy'},
+      {role: 'selectall'},
+      {role: 'paste'}
     ]
   },
-
   {
     label: 'Developer',
-    submenu: [{
-      role: 'toggledevtools'
-    },
-    {
-      label: 'Reset configuration',
-      click: () => {
-        storage.set('config', {})
-      }
-    }
+    submenu: [
+      {role: 'toggledevtools'},
+      {label: 'Reset configuration', click: () => storage.set('config', {})}
     ]
   }
   ]
@@ -142,12 +103,9 @@ function createMenu () {
   if (os.platform() === 'darwin') {
     menuTemplate.unshift({
       label: 'Home Assistant',
-      submenu: [{
-        role: 'about'
-      },
-      {
-        role: 'quit'
-      }
+      submenu: [
+        {role: 'about'},
+        {role: 'quit'}
       ]
     })
   }
@@ -156,7 +114,7 @@ function createMenu () {
 }
 
 function load (html) {
-  win.loadURL(url.format({
+  browserWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'src', html),
     protocol: 'file:',
     slashes: true
@@ -164,5 +122,5 @@ function load (html) {
 }
 
 function setPage (page) {
-  win.webContents.send('change', { page })
+  browserWindow.webContents.send('change', { page })
 }

@@ -40,6 +40,12 @@ function createWindow () {
     })
   }
 
+  storage.get('window', (err, data) => {
+    if (!err && data.width) {
+      browserWindow.setContentSize(data.width, data.height, false)
+    }
+  })
+
   browserWindow.connect = (url, password) => {
     browserWindow.url = url
     browserWindow.password = password
@@ -49,6 +55,13 @@ function createWindow () {
 
   browserWindow.on('closed', () => {
     browserWindow = null
+  })
+
+  browserWindow.on('close', () => {
+    let width = browserWindow.getBounds().width
+    let height = browserWindow.getBounds().width
+
+    storage.set('window', {width, height})
   })
 
   if (config.menu) {

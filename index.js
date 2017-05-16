@@ -108,7 +108,8 @@ function createMenu () {
     label: 'Developer',
     submenu: [
       {role: 'toggledevtools'},
-      {label: 'Reset configuration', click: () => storage.set('config', {})}
+      {label: 'Reset configuration', click: () => storage.set('config', {})},
+      {label: 'Reload', click: () => browserWindow.webContents.send('reload', {})}
     ]
   }
   ]

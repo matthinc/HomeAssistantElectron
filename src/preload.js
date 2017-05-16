@@ -27,4 +27,8 @@ ipcRenderer.on('change', (event, data) => {
   setPage(data.page)
 })
 
+ipcRenderer.on('reload', (event, data) => {
+  location.reload()
+})
+
 window.onload = login

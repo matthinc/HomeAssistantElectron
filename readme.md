@@ -12,18 +12,15 @@ You can find the first releases [here](https://github.com/matthinc/HomeAssistant
 
 
     $ npm install
+    
 
-## 2) Configure
-
-Open `config.js` and change anything you like.
-
-## 3) Test it
+## 2) Test it
 
 
     $ npm test
 
 
-## 4) Build
+## 3) Build
 
 
     $ npm run-script build_mac
@@ -34,7 +31,7 @@ Open `config.js` and change anything you like.
 
 If the build process is successfully finished then you will find the AppImage in the folder `dist`. 
 
-## 5) Run it!
+## 4) Run it!
 
 Eg. on a Linux-based system:
 

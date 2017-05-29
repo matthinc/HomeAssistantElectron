@@ -7,9 +7,15 @@ const {remote, ipcRenderer} = require('electron')
 // Login with password, after finished loading
 function login () {
   var password = remote.getCurrentWindow().password
+  var notifications = remote.getCurrentWindow().notifications
+
   if (password) {
     document.querySelector('home-assistant').shadowRoot.querySelector('login-form').password = password
     document.querySelector('home-assistant').shadowRoot.querySelector('login-form').validatePassword()
+  }
+
+  if (notifications) {
+    getNotifications()
   }
 }
 
@@ -32,3 +38,26 @@ ipcRenderer.on('reload', (event, data) => {
 })
 
 window.onload = login
+
+
+var lastNotification = ''
+
+function getNotifications() {
+  var notification = document
+      .querySelector('home-assistant').shadowRoot
+      .querySelector('notification-manager').shadowRoot
+      .querySelector('paper-toast')
+
+  var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutationRecord) {
+          var message = notification.shadowRoot.querySelector('#label').innerHTML
+
+          if (message != lastNotification) {
+            new Notification('Home Assistant', {body: message});
+          }
+
+          lastNotification = message
+      })  
+  })
+  observer.observe(notification, { attributes : true, attributeFilter : ['style'] })
+}

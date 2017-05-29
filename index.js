@@ -20,6 +20,7 @@ function createWindow () {
   browserWindow.url = config.url
   browserWindow.os = os.platform()
   browserWindow.password = ''
+  browserWindow.notifications = true
 
     // Show connect-view if config.url is undefined
   if (config.url) {

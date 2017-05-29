@@ -19,6 +19,28 @@ function login () {
   }
 }
 
+// Display native notifications
+var lastNotification = ''
+
+function getNotifications () {
+  var notification = document
+      .querySelector('home-assistant').shadowRoot
+      .querySelector('notification-manager').shadowRoot
+      .querySelector('paper-toast')
+
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutationRecord) {
+      var message = notification.shadowRoot.querySelector('#label').innerHTML
+      if (message != lastNotification && remote.getCurrentWindow().notifications) {
+        notification.style.display = 'none'
+        new Notification('Home Assistant', {body: message})
+      }
+      lastNotification = message
+    })
+  })
+  observer.observe(notification, { attributes: true, attributeFilter: ['style'] })
+}
+
 // Change page (states,history, ...)
 function setPage (page) {
   document
@@ -38,26 +60,3 @@ ipcRenderer.on('reload', (event, data) => {
 })
 
 window.onload = login
-
-
-var lastNotification = ''
-
-function getNotifications() {
-  var notification = document
-      .querySelector('home-assistant').shadowRoot
-      .querySelector('notification-manager').shadowRoot
-      .querySelector('paper-toast')
-
-  var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutationRecord) {
-          var message = notification.shadowRoot.querySelector('#label').innerHTML
-
-          if (message != lastNotification) {
-            new Notification('Home Assistant', {body: message});
-          }
-
-          lastNotification = message
-      })  
-  })
-  observer.observe(notification, { attributes : true, attributeFilter : ['style'] })
-}

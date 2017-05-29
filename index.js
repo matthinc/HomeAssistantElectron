@@ -3,48 +3,41 @@ const path = require('path')
 const url = require('url')
 const os = require('os')
 const storage = require('electron-json-storage')
-const config = require(path.join(__dirname, '/config.js'))
 
 var browserWindow
 
 function createWindow () {
   browserWindow = new BrowserWindow({
-    height: config.size.height,
+    height: 600,
     icon: 'assets/icon.ico',
-    kiosk: config.kiosk,
-    title: config.title,
+    kiosk: false,
+    title: 'Home Assistant',
     titleBarStyle: 'hidden',
-    width: config.size.width
+    width: 800
   })
 
-  browserWindow.url = config.url
+  browserWindow.url = 'null'
   browserWindow.os = os.platform()
   browserWindow.password = ''
   browserWindow.notifications = true
+  browserWindow.save_dimensions = false
 
-    // Show connect-view if config.url is undefined
-  if (config.url) {
-    browserWindow.url = config.url
-    browserWindow.password = config.password
-    load('index.html')
-  } else {
-        // Try to load config from json file
-    storage.get('config', (err, data) => {
-      if (!err && data.url) {
-        browserWindow.url = data.url
-        browserWindow.password = data.password
-        load('index.html')
-      } else {
-                // show connect-view if config was not found in the json
-        load('connect.html')
+  storage.get('config', (err, data) => {
+    if (!err && data.url) {
+      browserWindow.url = data.url
+      browserWindow.password = data.password
+      browserWindow.save_dimensions = data.save_dimensions
+      browserWindow.notifications = data.notifications
+
+      if (data.save_dimensions) {
+        browserWindow.setContentSize(data.width, data.height, false)
       }
-    })
-  }
 
-  storage.get('window', (err, data) => {
-    if (!err && data.width) {
-      browserWindow.setContentSize(data.width, data.height, false)
+      load('index.html')
+    } else {
+      load('connect.html')
     }
+    createMenu()
   })
 
   browserWindow.connect = (url, password) => {
@@ -60,14 +53,14 @@ function createWindow () {
 
   browserWindow.on('close', () => {
     let width = browserWindow.getBounds().width
-    let height = browserWindow.getBounds().width
+    let height = browserWindow.getBounds().height
 
-    storage.set('window', {width, height})
+    storage.get('config', (err, data) => {
+      data.width = width
+      data.height = height
+      storage.set('config', data)
+    })
   })
-
-  if (config.menu) {
-    createMenu()
-  }
 }
 
 app.on('ready', createWindow)
@@ -111,6 +104,31 @@ function createMenu () {
       {role: 'toggledevtools'},
       {label: 'Reset configuration', click: () => storage.set('config', {})},
       {label: 'Reload', click: () => browserWindow.webContents.send('reload', {})}
+    ]
+  },
+  {
+    label: 'Settings',
+    submenu: [
+      {label: 'Save window dimensions',
+        checked: browserWindow.save_dimensions,
+        type: 'checkbox',
+        click: () => {
+          storage.get('config', (err, data) => {
+            browserWindow.save_dimensions = !browserWindow.save_dimensions
+            data.save_dimensions = browserWindow.save_dimensions
+            storage.set('config', data)
+          })
+        }},
+      {label: 'Desktop notifications',
+        checked: browserWindow.notifications,
+        type: 'checkbox',
+        click: () => {
+          storage.get('config', (err, data) => {
+            browserWindow.notifications = !browserWindow.notifications
+            data.notifications = browserWindow.notifications
+            storage.set('config', data)
+          })
+        }}
     ]
   }
   ]

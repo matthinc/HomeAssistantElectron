@@ -172,7 +172,3 @@ autoUpdater.on('update-available', (d) => {
     shell.openExternal('https://github.com/matthinc/HomeAssistantElectron/releases/latest')
   })
 })
-
-autoUpdater.on('update-downloaded', (event, info) => {
-  autoUpdater.quitAndInstall()
-})

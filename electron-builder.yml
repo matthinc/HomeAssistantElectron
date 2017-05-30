@@ -14,4 +14,9 @@ mac:
   target: zip
 win:
   icon: assets/icon.ico
+  publish:
+  - "github"
+publish:
+  - provider: "github"
+  
 

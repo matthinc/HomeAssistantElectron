@@ -1,8 +1,9 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, dialog, shell } = require('electron')
 const path = require('path')
 const url = require('url')
 const os = require('os')
 const storage = require('electron-json-storage')
+const { autoUpdater } = require('electron-updater')
 
 var browserWindow
 
@@ -61,6 +62,10 @@ function createWindow () {
       storage.set('config', data)
     })
   })
+
+  setTimeout(function () {
+    autoUpdater.checkForUpdates()
+  }, 2000)
 }
 
 app.on('ready', createWindow)
@@ -157,3 +162,17 @@ function load (html) {
 function setPage (page) {
   browserWindow.webContents.send('change', { page })
 }
+
+/*
+  Auto update stuff
+ */
+
+autoUpdater.on('update-available', (d) => {
+  dialog.showMessageBox({buttons: ['Yes', 'No'], message: 'An update is available! Do you want to download it?'}, (c) => {
+    shell.openExternal('https://github.com/matthinc/HomeAssistantElectron/releases/latest')
+  })
+})
+
+autoUpdater.on('update-downloaded', (event, info) => {
+  autoUpdater.quitAndInstall()
+})

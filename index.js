@@ -30,7 +30,7 @@ function createWindow () {
       browserWindow.save_dimensions = data.save_dimensions
       browserWindow.notifications = data.notifications
 
-      if (data.save_dimensions) {
+      if (data.save_dimensions && data.width && data.height) {
         browserWindow.setContentSize(data.width, data.height, false)
       }
 

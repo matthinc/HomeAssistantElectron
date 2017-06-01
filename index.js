@@ -89,10 +89,10 @@ function createMenu () {
   let menuTemplate = [{
     label: 'Go',
     submenu: [
-      {label: 'States', click: () => setPage('states')},
-      {label: 'History', click: () => setPage('history')},
-      {label: 'Map', click: () => setPage('map')},
-      {label: 'Services', click: () => setPage('dev-service')}
+      {label: 'States', accelerator: 'Cmd+S', click: () => setPage('states')},
+      {label: 'History', accelerator: 'Cmd+H', click: () => setPage('history')},
+      {label: 'Map', accelerator: 'Cmd+Alt+M', click: () => setPage('map')},
+      {label: 'Services', accelerator: 'Cmd+Alt+S', click: () => setPage('dev-service')}
     ]
   },
   {
@@ -108,7 +108,7 @@ function createMenu () {
     submenu: [
       {role: 'toggledevtools'},
       {label: 'Reset configuration', click: () => storage.set('config', {})},
-      {label: 'Reload', click: () => browserWindow.webContents.send('reload', {})}
+      {label: 'Reload', accelerator: 'Cmd+Shift+R', click: () => browserWindow.webContents.send('reload', {})}
     ]
   },
   {

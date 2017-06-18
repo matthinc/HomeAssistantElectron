@@ -107,7 +107,6 @@ function createMenu () {
     label: 'Developer',
     submenu: [
       {role: 'toggledevtools'},
-      {label: 'Reset configuration', click: () => storage.set('config', {})},
       {label: 'Reload', accelerator: 'Cmd+Shift+R', click: () => browserWindow.webContents.send('reload', {})}
     ]
   },
@@ -133,7 +132,8 @@ function createMenu () {
             data.notifications = browserWindow.notifications
             storage.set('config', data)
           })
-        }}
+        }},
+        {label: 'Reset configuration', click: () => storage.set('config', {})}
     ]
   }
   ]

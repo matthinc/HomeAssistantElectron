@@ -41,7 +41,7 @@
             outline: none;
         }
         
-        #container {
+        .container {
             display: block;
             text-align: center;
             margin-top: 70px;
@@ -84,20 +84,22 @@
 <body>
     <div id="titlebar"></div>
     <h2>Connect to Home Assistant</h2>
-    <div id="container">
-        <input id="url-input" value="http://localhost:8123" placeholder="URL"><br>
-        <input id="password-input" value="" type="password" placeholder="Password (optional)">
-        <br>
-        <p class="warning">Warning! The password will be stored in plaintext on your computer!</p>
-    </div>
-    <div id="container">
-        <div>
-            <button onclick="connect()">Connect</button>
+    <form onsubmit="connect()">
+        <div class="container">
+            <input id="url-input" value="http://localhost:8123" placeholder="URL"><br>
+            <input id="password-input" value="" type="password" placeholder="Password (optional)">
+            <br>
+            <p class="warning">Warning! The password will be stored in plaintext on your computer!</p>
         </div>
-        <div id="status">
+        <div class="container">
+            <div>
+                <button type="submit">Connect</button>
+            </div>
+            <div id="status">
 
+            </div>
         </div>
-    </div>
+    </form>
 </body>
 
 </html>

@@ -32,6 +32,9 @@ function createWindow () {
 
       if (data.save_dimensions && data.width && data.height) {
         browserWindow.setContentSize(data.width, data.height, false)
+        if (data.xpos && data.ypos) {
+          browserWindow.setPosition(data.xpos, data.ypos)
+        }
       }
 
       load('index.html')
@@ -53,12 +56,17 @@ function createWindow () {
   })
 
   browserWindow.on('close', () => {
-    let width = browserWindow.getBounds().width
-    let height = browserWindow.getBounds().height
+
+    let w = browserWindow.getBounds().width
+    let h = browserWindow.getBounds().height
+    let x = browserWindow.getPosition()[0]
+    let y = browserWindow.getPosition()[1]
 
     storage.get('config', (err, data) => {
-      data.width = width
-      data.height = height
+      data.width = w
+      data.height = h
+      data.xpos = x
+      data.ypos = y
       storage.set('config', data)
     })
   })

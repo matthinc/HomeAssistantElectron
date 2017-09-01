@@ -9,6 +9,8 @@ files:
 asar: false
 linux:
   icon: assets/linux/
+  target: AppImage
+  category: Utility
 mac:
   icon: assets/icon.icns
   target: zip

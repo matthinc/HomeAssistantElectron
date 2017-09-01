@@ -1,12 +1,12 @@
 {
   "name": "home_assistant_electron",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Create Home Assistant Electron app ==================================",
   "main": "index.js",
   "scripts": {
     "test": "electron index.js",
     "build": "build -c electron-builder.yml --mac",
-    "publish": "build -c electron-builder.yml --mac --win --publish onTagOrDraft"
+    "publish": "build -c electron-builder.yml --mac --win --linux --publish onTagOrDraft"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,6 @@
   },
   "devDependencies": {
     "electron": "^1.6.5",
-    "electron-builder": "^17.0.1"
+    "electron-builder": "^19.22.1"
   }
 }

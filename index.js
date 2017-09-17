@@ -1,9 +1,11 @@
-const { app, BrowserWindow, Menu, dialog, shell } = require('electron')
+const { app, BrowserWindow, Menu, dialog, shell, Tray } = require('electron')
 const path = require('path')
 const url = require('url')
 const os = require('os')
 const storage = require('electron-json-storage')
 const { autoUpdater } = require('electron-updater')
+
+const TrayInit = require('./tray')
 
 var browserWindow
 
@@ -36,6 +38,8 @@ function createWindow () {
           browserWindow.setPosition(data.xpos, data.ypos)
         }
       }
+
+      TrayInit(Tray, Menu, data.url, data.password)
 
       load('index.html')
     } else {
@@ -71,9 +75,14 @@ function createWindow () {
     })
   })
 
-  setTimeout(function () {
-    autoUpdater.checkForUpdates()
-  }, 2000)
+  //Dont update in dev mode
+  if (process.mainModule.filename.indexOf('app.asar') !== -1) {
+
+    //Check for updates
+    setTimeout(function () {
+      autoUpdater.checkForUpdates()
+    }, 2000)
+  }
 }
 
 app.on('ready', createWindow)

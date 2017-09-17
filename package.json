@@ -20,7 +20,8 @@
   "homepage": "https://github.com/matthinc/HomeAssistantElectron#readme",
   "dependencies": {
     "electron-json-storage": "^3.0.5",
-    "electron-updater": "^1.16.0"
+    "electron-updater": "^1.16.0",
+    "node-rest-client": "^3.1.0"
   },
   "devDependencies": {
     "electron": "^1.6.5",

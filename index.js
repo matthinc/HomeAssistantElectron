@@ -2,9 +2,7 @@ const { app, BrowserWindow, Menu, dialog, shell, Tray } = require('electron')
 const path = require('path')
 const url = require('url')
 const os = require('os')
-const storage = require('electron-json-storage')
-const { autoUpdater } = require('electron-updater')
-
+const settings = require('electron-settings')
 const TrayInit = require('./tray')
 
 var browserWindow
@@ -19,40 +17,44 @@ function createWindow () {
     width: 800
   })
 
-  browserWindow.url = 'null'
+  browserWindow.url = settings.has('url')? settings.get('url'): 'null'
   browserWindow.os = os.platform()
-  browserWindow.password = ''
-  browserWindow.notifications = true
-  browserWindow.save_dimensions = false
+  browserWindow.password = settings.has('password')? settings.get('password'): ''
+  browserWindow.notifications = settings.has('notifications')? settings.get('notifications'): false
+  browserWindow.save_dimensions = settings.has('save_dimensnions')? settings.get('save_dimensnions'): false
 
-  storage.get('config', (err, data) => {
-    if (!err && data.url) {
-      browserWindow.url = data.url
-      browserWindow.password = data.password
-      browserWindow.save_dimensions = data.save_dimensions
-      browserWindow.notifications = data.notifications
+  if (settings.has('url')) {
+    load('index.html')
+    TrayInit(settings.get('url'), settings.get('password'))
+  } else {
+    load('connect.html')
+  }
 
-      if (data.save_dimensions && data.width && data.height) {
-        browserWindow.setContentSize(data.width, data.height, false)
-        if (data.xpos && data.ypos) {
-          browserWindow.setPosition(data.xpos, data.ypos)
-        }
-      }
+  if (settings.has('width') && settings.has('height')) {
+    browserWindow.setContentSize(settings.get('width'), settings.get('height'), false)
+  }
 
-      TrayInit(Tray, Menu, data.url, data.password)
+  if (settings.has('xpos') && settings.has('ypos')) {
+    browserWindow.setPosition(settings.get('xpos'), settings.get('ypos'))
+  }
 
-      load('index.html')
-    } else {
-      load('connect.html')
-    }
-    createMenu()
-  })
+  createMenu()
 
   browserWindow.connect = (url, password) => {
     browserWindow.url = url
     browserWindow.password = password
-    storage.set('config', { url, password })
+    settings.set('url', url)
+    settings.set('password', password)
     load('index.html')
+    TrayInit(settings.get('url'), settings.get('password'))
+  }
+
+  browserWindow.saveSettings = () => {
+    if (settings.has('url')) {
+      load('index.html')
+    } else {
+      load('connect.html')
+    }
   }
 
   browserWindow.on('closed', () => {
@@ -60,29 +62,11 @@ function createWindow () {
   })
 
   browserWindow.on('close', () => {
-
-    let w = browserWindow.getBounds().width
-    let h = browserWindow.getBounds().height
-    let x = browserWindow.getPosition()[0]
-    let y = browserWindow.getPosition()[1]
-
-    storage.get('config', (err, data) => {
-      data.width = w
-      data.height = h
-      data.xpos = x
-      data.ypos = y
-      storage.set('config', data)
-    })
+    settings.set('xpos', browserWindow.getPosition()[0])
+    settings.set('ypos', browserWindow.getPosition()[1])
+    settings.set('width', browserWindow.getBounds().width)
+    settings.set('height', browserWindow.getBounds().height)
   })
-
-  //Dont update in dev mode
-  if (process.mainModule.filename.indexOf('app.asar') !== -1) {
-
-    //Check for updates
-    setTimeout(function () {
-      autoUpdater.checkForUpdates()
-    }, 2000)
-  }
 }
 
 app.on('ready', createWindow)
@@ -126,32 +110,6 @@ function createMenu () {
       {role: 'toggledevtools'},
       {label: 'Reload', accelerator: 'Cmd+Shift+R', click: () => browserWindow.webContents.send('reload', {})}
     ]
-  },
-  {
-    label: 'Settings',
-    submenu: [
-      {label: 'Save window dimensions',
-        checked: browserWindow.save_dimensions,
-        type: 'checkbox',
-        click: () => {
-          storage.get('config', (err, data) => {
-            browserWindow.save_dimensions = !browserWindow.save_dimensions
-            data.save_dimensions = browserWindow.save_dimensions
-            storage.set('config', data)
-          })
-        }},
-      {label: 'Desktop notifications',
-        checked: browserWindow.notifications,
-        type: 'checkbox',
-        click: () => {
-          storage.get('config', (err, data) => {
-            browserWindow.notifications = !browserWindow.notifications
-            data.notifications = browserWindow.notifications
-            storage.set('config', data)
-          })
-        }},
-        {label: 'Reset configuration', click: () => storage.set('config', {})}
-    ]
   }
   ]
         // Mac default menu
@@ -160,7 +118,8 @@ function createMenu () {
       label: 'Home Assistant',
       submenu: [
         {role: 'about'},
-        {role: 'quit'}
+        {role: 'quit'},
+        {label: 'Preferences...', click: () => load('settings.html')}
       ]
     })
   }
@@ -179,13 +138,3 @@ function load (html) {
 function setPage (page) {
   browserWindow.webContents.send('change', { page })
 }
-
-/*
-  Auto update stuff
- */
-
-autoUpdater.on('update-available', (d) => {
-  dialog.showMessageBox({buttons: ['Yes', 'No'], message: 'An update is available! Do you want to download it?'}, (c) => {
-    shell.openExternal('https://github.com/matthinc/HomeAssistantElectron/releases/latest')
-  })
-})

@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+        body {
+            margin: 0px;
+            background-color: white;
+            height: 100%;
+            overflow: hidden
+        }
+        
+        #titlebar {
+            -webkit-app-region: drag;
+            height: 25px;
+            display: block;
+        }
+        
+        h2 {
+            color: #03A9F4;
+            font-family: 'Roboto';
+            font-weight: 300;
+            font-size: 23px;
+            margin-top: 50px;
+            display: block;
+            text-align: center;
+        }
+
+        .container {
+            display: block;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            background-color: #03A9F4;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: hand;
+        }
+        
+        button:hover {
+            background-color: #3ab8f2;
+        }
+ 
+    </style>
+
+    <script>
+        const { remote } = require('electron')
+        function save () {
+            remote.getCurrentWindow().saveSettings()
+        }
+    </script>
+</head>
+
+<body>
+    <div id="titlebar"></div>
+    <h2>Settings</h2>
+    <div class="container">
+        <button onclick="save()">Ok</button>
+    </div>
+</body>
+
+</html>

@@ -1,4 +1,6 @@
 const Client = require('node-rest-client').Client
+const { app, BrowserWindow, Menu, dialog, shell, Tray } = require('electron')
+
 var client = new Client()
 
 /**
@@ -40,10 +42,15 @@ function filterDomain(states, domain, sensor = false) {
         })
 }
 
-function createTray(Tray, Menu, hass, password) {
+function createTray(hass, password) {
     let tray = new Tray('assets/tray.png')
 
     client.get(hass + `/api/states?api_password=${password}`, (data, res) => {
+
+        if (data instanceof Buffer) {
+            dialog.showErrorBox('Tray error', `Unable to connect to ${hass}/apis/states?api_password=${password}`)
+            return
+        }
 
         let switches = filterDomain(data, 'switch').map(item => {
             return {

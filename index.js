@@ -17,15 +17,14 @@ function createWindow () {
     width: 800
   })
 
-  browserWindow.url = settings.has('url')? settings.get('url'): 'null'
   browserWindow.os = os.platform()
-  browserWindow.password = settings.has('password')? settings.get('password'): ''
-  browserWindow.notifications = settings.has('notifications')? settings.get('notifications'): false
-  browserWindow.save_dimensions = settings.has('save_dimensnions')? settings.get('save_dimensnions'): false
+  browserWindow.settings = settings
 
   if (settings.has('url')) {
     load('index.html')
-    TrayInit(settings.get('url'), settings.get('password'))
+    if (!settings.has('tray') || settings.get('tray')) {
+      TrayInit(settings.get('url'), settings.get('password'))
+    }
   } else {
     load('connect.html')
   }
@@ -46,15 +45,26 @@ function createWindow () {
     settings.set('url', url)
     settings.set('password', password)
     load('index.html')
-    TrayInit(settings.get('url'), settings.get('password'))
+    if (!settings.has('tray') || settings.get('tray')) {
+      TrayInit(settings.get('url'), settings.get('password'))
+    }
   }
 
-  browserWindow.saveSettings = () => {
+  browserWindow.saveSettings = (notifications, dimensions, tray, kiosk) => {
+    settings.set('notifications', notifications)
+    settings.set('save_dimensions', dimensions)
+    settings.set('tray', tray)
+    settings.set('kiosk', kiosk)
     if (settings.has('url')) {
       load('index.html')
     } else {
       load('connect.html')
     }
+  }
+
+  browserWindow.reset = () => {
+    settings.deleteAll()
+    app.quit()
   }
 
   browserWindow.on('closed', () => {

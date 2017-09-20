@@ -2,7 +2,7 @@ const {remote, ipcRenderer, shell} = require('electron')
 
 window.onload = () => {
   let frame = document.getElementById('content_frame')
-  frame.src = remote.getCurrentWindow().url
+  frame.src = remote.getCurrentWindow().settings.get('url')
 
     // Remove HTML titlebar on Windows/Linux
   let titlebar = document.getElementById('titlebar')

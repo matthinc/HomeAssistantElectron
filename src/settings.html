@@ -30,6 +30,7 @@
             display: block;
             text-align: center;
             margin-top: 70px;
+            font-family: 'Roboto';
         }
 
         button {
@@ -45,23 +46,75 @@
         button:hover {
             background-color: #3ab8f2;
         }
+
+        .prefs {
+            font-size: 12px;
+        }
+
+        .disabled {
+            color: #999;
+        }
+
+        table {
+            margin: 0 auto;
+        }
  
     </style>
-
-    <script>
-        const { remote } = require('electron')
-        function save () {
-            remote.getCurrentWindow().saveSettings()
-        }
-    </script>
 </head>
 
 <body>
     <div id="titlebar"></div>
     <h2>Settings</h2>
     <div class="container">
-        <button onclick="save()">Ok</button>
+        <table>
+            <tr>
+                <td><input id="s0" type="checkbox"></td>
+                <td><span class="prefs">Show notifications</span></td>
+            </tr>
+            <tr>
+                <td><input id="s1" type="checkbox"></td>
+                <td><span class="prefs">Save window dimensions</span></td>
+            </tr>
+            <tr>
+                <td><input id="s2" type="checkbox"></td>
+                <td><span class="prefs">Create tray menu</span></td>
+            </tr>
+            <tr>
+                <td><input id="s3" type="checkbox" disabled="true"></td>
+                <td><span class="prefs disabled">Kiosk mode</span></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Some changes may require a restart</h5>
     </div>
+    <div class="container">
+        <button onclick="save()">Ok</button>
+        <button onclick="reset()">Reset and quit</button>
+    </div>
+
+    <script>
+            const { remote } = require('electron')
+
+            document.getElementById("s0").checked = remote.getCurrentWindow().settings.get('notifications', false)
+            document.getElementById("s1").checked = remote.getCurrentWindow().settings.get('save_dimensions', false)
+            document.getElementById("s2").checked = remote.getCurrentWindow().settings.get('tray', true)
+            document.getElementById("s3").checked = remote.getCurrentWindow().settings.get('kiosk', false)
+
+            function save () {
+                remote.getCurrentWindow().saveSettings(
+                    document.getElementById("s0").checked,
+                    document.getElementById("s1").checked,
+                    document.getElementById("s2").checked,
+                    document.getElementById("s3").checked,
+                )
+            }
+
+            function reset() {
+                if (confirm('This will delete all settings (including url and password). Are you sure?')) {
+                    remote.getCurrentWindow().reset()
+                }
+            }
+        </script>
 </body>
 
 </html>

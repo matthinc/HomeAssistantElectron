@@ -6,8 +6,8 @@ const {remote, ipcRenderer} = require('electron')
 
 // Login with password, after finished loading
 function login () {
-  var password = remote.getCurrentWindow().password
-  var notifications = remote.getCurrentWindow().notifications
+  var password = remote.getCurrentWindow().settings.get('password')
+  var notifications = remote.getCurrentWindow().settings.get('notifications')
 
   if (password) {
     document.querySelector('home-assistant').shadowRoot.querySelector('login-form').password = password
@@ -31,7 +31,7 @@ function getNotifications () {
   var observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutationRecord) {
       var message = notification.shadowRoot.querySelector('#label').innerHTML
-      if (message != lastNotification && remote.getCurrentWindow().notifications) {
+      if (message != lastNotification && remote.getCurrentWindow().settings.get('notifications')) {
         notification.style.display = 'none'
         new Notification('Home Assistant', {body: message})
       }

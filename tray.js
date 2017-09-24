@@ -5,11 +5,11 @@ var client = new Client()
 
 /**
  * Calls a home assistant service
- * @param {*} hass 
- * @param {*} password 
- * @param {*} domain 
- * @param {*} service 
- * @param {*} entity_id 
+ * @param {*} hass
+ * @param {*} password
+ * @param {*} domain
+ * @param {*} service
+ * @param {*} entity_id
  */
 function hassService(hass, password, domain, service, entity_id) {
     client.post(`${hass}/api/services/${domain}/${service}`,
@@ -19,8 +19,8 @@ function hassService(hass, password, domain, service, entity_id) {
 
 /**
  * get single domain and create best label
- * @param {*} states 
- * @param {*} domain 
+ * @param {*} states
+ * @param {*} domain
  * @param {*} sensor if true, label contains state and unit
  */
 function filterDomain(states, domain, sensor = false) {
@@ -77,8 +77,13 @@ function createTray(hass, password) {
             return { label: item.label, enabled: false }
         })
 
+        let bins = filterDomain(data, 'binary_sensor', true).map(item => {
+            return { label: item.label, enabled: false }
+        })
+
         let items = [
             ...sensors,
+            ...bins,
             { label: 'Switches', submenu: switches },
             { label: 'Lights', submenu: lights },
             { label: 'Scenes', submenu: scenes }

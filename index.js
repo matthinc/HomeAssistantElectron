@@ -100,38 +100,25 @@ function createMenu () {
   let menuTemplate = [{
     label: 'Go',
     submenu: [
-      {label: 'States', accelerator: 'Cmd+S', click: () => setPage('states')},
-      {label: 'History', accelerator: 'Cmd+H', click: () => setPage('history')},
-      {label: 'Map', accelerator: 'Cmd+Alt+M', click: () => setPage('map')},
-      {label: 'Services', accelerator: 'Cmd+Alt+S', click: () => setPage('dev-service')}
-    ]
-  },
-  {
+      {label: 'States', accelerator: 'Cmd+1', click: () => setPage('states')},
+      {label: 'History', accelerator: 'Cmd+2', click: () => setPage('history')},
+      {label: 'Map', accelerator: 'Cmd+3', click: () => setPage('map')},
+      {label: 'Services', accelerator: 'Cmd+4', click: () => setPage('dev-service')}
+    ]},{
     label: 'Edit',
-    submenu: [
-      {role: 'copy'},
-      {role: 'selectall'},
-      {role: 'paste'}
-    ]
-  },
-  {
+    submenu: [{role: 'copy'},{role: 'selectall'},{role: 'paste'}]},{
     label: 'Developer',
     submenu: [
       {role: 'toggledevtools'},
-      {label: 'Reload', accelerator: 'Cmd+Shift+R', click: () => browserWindow.webContents.send('reload', {})}
-    ]
-  }
-  ]
+      {label: 'Reload', accelerator: 'Cmd+Shift+R', click: () => browserWindow.webContents.send('reload', {})}]}]
         // Mac default menu
   if (os.platform() === 'darwin') {
     menuTemplate.unshift({
       label: 'Home Assistant',
       submenu: [
         {role: 'about'},
-        {role: 'quit'},
-        {label: 'Preferences...', click: () => load('settings.html')}
-      ]
-    })
+        {label: 'Preferences...', click: () => load('settings.html')},
+        {role: 'quit'}]})
   }
   const menu = Menu.buildFromTemplate(menuTemplate)
   Menu.setApplicationMenu(menu)

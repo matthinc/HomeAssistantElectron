@@ -3,8 +3,10 @@ productName: "Home Assistant"
 files:
 - "src/**/*"
 - index.js
+- tray.js
 - config.js
 - assets/icon.png
+- assets/tray.png
 - "node_modules/**/*"
 asar: false
 linux:
@@ -20,5 +22,3 @@ win:
   - "github"
 publish:
   - provider: "github"
-  
-

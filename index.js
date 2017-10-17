@@ -103,7 +103,10 @@ function createMenu () {
       {label: 'States', accelerator: 'Cmd+1', click: () => setPage('states')},
       {label: 'History', accelerator: 'Cmd+2', click: () => setPage('history')},
       {label: 'Map', accelerator: 'Cmd+3', click: () => setPage('map')},
-      {label: 'Services', accelerator: 'Cmd+4', click: () => setPage('dev-service')}
+      {label: 'Configuration', accelerator: 'Cmd+4', click: () => setPage('config')},
+      {label: 'Services', accelerator: 'Cmd+5', click: () => setPage('dev-service')},
+      {type: 'separator'},
+      {label: 'Preferences...', click: () => load('settings.html')}
     ]},{
     label: 'Edit',
     submenu: [{role: 'copy'},{role: 'selectall'},{role: 'paste'}]},{
@@ -117,7 +120,6 @@ function createMenu () {
       label: 'Home Assistant',
       submenu: [
         {role: 'about'},
-        {label: 'Preferences...', click: () => load('settings.html')},
         {role: 'quit'}]})
   }
   const menu = Menu.buildFromTemplate(menuTemplate)

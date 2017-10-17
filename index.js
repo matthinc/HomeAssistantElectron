@@ -11,7 +11,7 @@ function createWindow () {
   browserWindow = new BrowserWindow({
     height: 600,
     icon: 'assets/icon.ico',
-    kiosk: false,
+    kiosk: false, //TODO: Reimplement
     title: 'Home Assistant',
     titleBarStyle: 'hidden',
     width: 800
@@ -23,7 +23,7 @@ function createWindow () {
   if (settings.has('url')) {
     load('index.html')
     if (!settings.has('tray') || settings.get('tray')) {
-      TrayInit(settings.get('url'), settings.get('password'))
+      TrayInit(settings.get('url'), settings.get('password'), settings.get('sensors_in_tray', false))
     }
   } else {
     load('connect.html')
@@ -46,17 +46,19 @@ function createWindow () {
     settings.set('password', password)
     load('index.html')
     if (!settings.has('tray') || settings.get('tray')) {
-      TrayInit(settings.get('url'), settings.get('password'))
+      TrayInit(settings.get('url'), settings.get('password'), settings.get('sensors_in_tray', false))
     }
   }
 
-  browserWindow.saveSettings = (notifications, dimensions, tray, kiosk) => {
+  browserWindow.saveSettings = (notifications, dimensions, tray, kiosk, sit) => {
     settings.set('notifications', notifications)
     settings.set('save_dimensions', dimensions)
     settings.set('tray', tray)
     settings.set('kiosk', kiosk)
+    settings.set('sensors_in_tray', sit)
     if (settings.has('url')) {
       load('index.html')
+      TrayInit(settings.get('url'), settings.get('password'), settings.get('sensors_in_tray', false))
     } else {
       load('connect.html')
     }

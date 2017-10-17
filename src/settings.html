@@ -9,13 +9,13 @@
             height: 100%;
             overflow: hidden
         }
-        
+
         #titlebar {
             -webkit-app-region: drag;
             height: 25px;
             display: block;
         }
-        
+
         h2 {
             color: #03A9F4;
             font-family: 'Roboto';
@@ -42,7 +42,7 @@
             border-radius: 5px;
             cursor: hand;
         }
-        
+
         button:hover {
             background-color: #3ab8f2;
         }
@@ -58,7 +58,7 @@
         table {
             margin: 0 auto;
         }
- 
+
     </style>
 </head>
 
@@ -80,6 +80,10 @@
                 <td><span class="prefs">Create tray menu</span></td>
             </tr>
             <tr>
+                <td><input id="s4" type="checkbox"></td>
+                <td><span class="prefs">Show sensors in tray</span></td>
+            </tr>
+            <tr>
                 <td><input id="s3" type="checkbox" disabled="true"></td>
                 <td><span class="prefs disabled">Kiosk mode</span></td>
             </tr>
@@ -98,6 +102,7 @@
             document.getElementById("s0").checked = remote.getCurrentWindow().settings.get('notifications', false)
             document.getElementById("s1").checked = remote.getCurrentWindow().settings.get('save_dimensions', false)
             document.getElementById("s2").checked = remote.getCurrentWindow().settings.get('tray', true)
+            document.getElementById("s4").checked = remote.getCurrentWindow().settings.get('sensors_in_tray', false)
             document.getElementById("s3").checked = remote.getCurrentWindow().settings.get('kiosk', false)
 
             function save () {
@@ -106,6 +111,7 @@
                     document.getElementById("s1").checked,
                     document.getElementById("s2").checked,
                     document.getElementById("s3").checked,
+                    document.getElementById("s4").checked
                 )
             }
 

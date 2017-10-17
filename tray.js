@@ -1,7 +1,9 @@
 const Client = require('node-rest-client').Client
 const { app, BrowserWindow, Menu, dialog, shell, Tray } = require('electron')
+const path = require('path')
 
 var client = new Client()
+var activeTray = undefined
 
 /**
  * Calls a home assistant service
@@ -42,8 +44,14 @@ function filterDomain(states, domain, sensor = false) {
         })
 }
 
-function createTray(hass, password) {
-    let tray = new Tray('assets/tray.png')
+function createTray(hass, password, show_sensors) {
+
+    if (activeTray) {
+      activeTray.destroy()
+    }
+
+    let tray = new Tray(path.join(__dirname, 'assets/tray.png'))
+    activeTray = tray
 
     client.get(hass + `/api/states?api_password=${password}`, (data, res) => {
 
@@ -73,13 +81,16 @@ function createTray(hass, password) {
             }
         })
 
-        let sensors = filterDomain(data, 'sensor', true).map(item => {
-            return { label: item.label, enabled: false }
-        })
-
-        let bins = filterDomain(data, 'binary_sensor', true).map(item => {
-            return { label: item.label, enabled: false }
-        })
+        let sensors = []
+        let bins = []
+        if (show_sensors) {
+          sensors = filterDomain(data, 'sensor', true).map(item => {
+              return { label: item.label, enabled: false }
+          })
+          bins = filterDomain(data, 'binary_sensor', true).map(item => {
+              return { label: item.label, enabled: false }
+          })
+        }
 
         let items = [
             ...sensors,

@@ -7,6 +7,7 @@ files:
 - config.js
 - assets/icon.png
 - assets/tray.png
+- assets/tray@2x.png
 - "node_modules/**/*"
 asar: false
 linux:

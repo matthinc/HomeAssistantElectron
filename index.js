@@ -11,7 +11,7 @@ function createWindow () {
   browserWindow = new BrowserWindow({
     height: 600,
     icon: 'assets/icon.ico',
-    kiosk: false, //TODO: Reimplement
+    kiosk: false, // TODO: Reimplement
     title: 'Home Assistant',
     titleBarStyle: 'hidden',
     width: 800
@@ -50,12 +50,13 @@ function createWindow () {
     }
   }
 
-  browserWindow.saveSettings = (notifications, dimensions, tray, kiosk, sit) => {
+  browserWindow.saveSettings = (notifications, dimensions, tray, kiosk, sit, toolbar) => {
     settings.set('notifications', notifications)
     settings.set('save_dimensions', dimensions)
     settings.set('tray', tray)
     settings.set('kiosk', kiosk)
     settings.set('sensors_in_tray', sit)
+    settings.set('toolbar_always', toolbar)
     if (settings.has('url')) {
       load('index.html')
       TrayInit(settings.get('url'), settings.get('password'), settings.get('sensors_in_tray', false))
@@ -109,11 +110,11 @@ function createMenu () {
       {label: 'Services', accelerator: 'Cmd+5', click: () => setPage('dev-service')},
       {type: 'separator'},
       {label: 'Preferences...', click: () => load('settings.html')}
-    ]},{
-    label: 'Edit',
-    submenu: [{role: 'copy'},{role: 'selectall'},{role: 'paste'}]},{
-    label: 'Developer',
-    submenu: [
+    ]}, {
+      label: 'Edit',
+      submenu: [{role: 'copy'}, {role: 'selectall'}, {role: 'paste'}]}, {
+        label: 'Developer',
+        submenu: [
       {role: 'toggledevtools'},
       {label: 'Reload', accelerator: 'Cmd+Shift+R', click: () => browserWindow.webContents.send('reload', {})}]}]
         // Mac default menu

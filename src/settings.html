@@ -84,6 +84,10 @@
                 <td><span class="prefs">Show sensors in tray</span></td>
             </tr>
             <tr>
+                <td><input id="s5" type="checkbox"></td>
+                <td><span class="prefs">Don't hide toolbar when scrolling</span></td>
+            </tr>
+            <tr>
                 <td><input id="s3" type="checkbox" disabled="true"></td>
                 <td><span class="prefs disabled">Kiosk mode</span></td>
             </tr>
@@ -104,6 +108,7 @@
             document.getElementById("s2").checked = remote.getCurrentWindow().settings.get('tray', true)
             document.getElementById("s4").checked = remote.getCurrentWindow().settings.get('sensors_in_tray', false)
             document.getElementById("s3").checked = remote.getCurrentWindow().settings.get('kiosk', false)
+            document.getElementById("s5").checked = remote.getCurrentWindow().settings.get('toolbar_always', true)
 
             function save () {
                 remote.getCurrentWindow().saveSettings(
@@ -111,7 +116,8 @@
                     document.getElementById("s1").checked,
                     document.getElementById("s2").checked,
                     document.getElementById("s3").checked,
-                    document.getElementById("s4").checked
+                    document.getElementById("s4").checked,
+                    document.getElementById("s5").checked
                 )
             }
 

@@ -12,6 +12,21 @@ function login () {
   if (password) {
     document.querySelector('home-assistant').shadowRoot.querySelector('login-form').password = password
     document.querySelector('home-assistant').shadowRoot.querySelector('login-form').validatePassword()
+
+    let interval = setInterval(() => {
+      let main = document.querySelector('home-assistant').shadowRoot.querySelector('home-assistant-main')
+      if (main) {
+        if (remote.getCurrentWindow().settings.get('toolbar_always', true)) {
+          main.shadowRoot.querySelector('#drawer')
+          .querySelector('iron-pages')
+          .querySelector('partial-cards')
+          .shadowRoot.querySelector('app-header-layout')
+          .querySelector('app-header')
+          .removeAttribute('condenses')
+        }
+        clearInterval(interval)
+      }
+    }, 100)
   }
 
   if (notifications) {

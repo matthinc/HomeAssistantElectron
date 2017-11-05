@@ -65,6 +65,10 @@ function createWindow () {
     }
   }
 
+  browserWindow.setColor = (color) => {
+    browserWindow.webContents.send('colorChange', {color})
+  }
+
   browserWindow.reset = () => {
     settings.deleteAll()
     app.quit()

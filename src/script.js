@@ -8,6 +8,8 @@ window.onload = () => {
   let titlebar = document.getElementById('titlebar')
   if (remote.getCurrentWindow().os !== 'darwin') {
     titlebar.parentNode.removeChild(titlebar)
+  } else {
+    titlebar.style.backgroundColor = remote.getCurrentWindow().settings.get('color','#03A9F4')
   }
 
   frame.addEventListener('new-window', (event) => {
@@ -19,6 +21,11 @@ window.onload = () => {
 ipcRenderer.on('load', (event, data) => {
   let frame = document.getElementById('content_frame')
   frame.src = data.url
+})
+
+ipcRenderer.on('colorChange', (event, data) => {
+  let titlebar = document.getElementById('titlebar')
+  titlebar.style.backgroundColor = data.color
 })
 
 ipcRenderer.on('change', (event, data) => {

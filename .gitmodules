@@ -1,3 +1,6 @@
 [submodule "MenubarApp"]
 	path = MenubarApp
 	url = https://github.com/matthinc/HomeAssistantElectronMenubar
+[submodule "Menubar"]
+	path = Menubar
+	url = https://github.com/matthinc/HomeAssistantElectronMenubar

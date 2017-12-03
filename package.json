@@ -1,6 +1,6 @@
 {
   "name": "home_assistant_electron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create Home Assistant Electron app ==================================",
   "main": "index.js",
   "scripts": {

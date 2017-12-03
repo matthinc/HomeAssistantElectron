@@ -19,6 +19,10 @@ mac:
   target: zip
 win:
   icon: assets/icon.ico
+  target:
+    arch:
+    - "x64"
+    - "ia32"
   publish:
   - "github"
 publish:

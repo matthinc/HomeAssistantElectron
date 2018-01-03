@@ -7,19 +7,20 @@ const TrayInit = require('./tray')
 
 var browserWindow
 
+/*
 var menubar = require('menubar')
 var mb = menubar({
   dir: './Menubar/dist/',
   width: 600,
   height: 300
 })
+*/
 
 console.log(app.getAppPath() + '/Menubar/dist')
 
-mb.on('ready', function ready () {
+/* mb.on('ready', function ready () {
   console.log('app is ready')
-})
-
+}) */
 
 function createWindow () {
   browserWindow = new BrowserWindow({
@@ -30,7 +31,6 @@ function createWindow () {
     titleBarStyle: 'hidden',
     width: 800
   })
-
 
   browserWindow.os = os.platform()
   browserWindow.settings = settings

@@ -9,7 +9,7 @@ window.onload = () => {
   if (remote.getCurrentWindow().os !== 'darwin') {
     titlebar.parentNode.removeChild(titlebar)
   } else {
-    titlebar.style.backgroundColor = remote.getCurrentWindow().settings.get('color','#03A9F4')
+    titlebar.style.backgroundColor = remote.getCurrentWindow().settings.get('color', '#03A9F4')
   }
 
   frame.addEventListener('new-window', (event) => {

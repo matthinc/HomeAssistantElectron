@@ -16,9 +16,9 @@ function login () {
     let interval = setInterval(() => {
       let main = document.querySelector('home-assistant').shadowRoot.querySelector('home-assistant-main')
       if (main) {
-        //Main view loaded
+        // Main view loaded
         if (remote.getCurrentWindow().settings.get('toolbar_always', true)) {
-          //Always show toolbar
+          // Always show toolbar
           main.shadowRoot.querySelector('#drawer')
           .querySelector('iron-pages')
           .querySelector('partial-cards')
@@ -26,10 +26,10 @@ function login () {
           .querySelector('app-header')
           .removeAttribute('condenses')
         }
-        //Get color
+        // Get color
         let hass = document.querySelector('home-assistant')
         remote.getCurrentWindow().setColor(getComputedStyle(hass).getPropertyValue('--primary-color'))
-        
+
         var observer = new MutationObserver(function (mutations) {
           remote.getCurrentWindow().setColor(getComputedStyle(main).getPropertyValue('--primary-color'))
         })

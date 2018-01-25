@@ -5,6 +5,8 @@ files:
 - index.js
 - tray.js
 - config.js
+- settings.js
+- menu.js
 - assets/icon.png
 - assets/tray.png
 - assets/tray@2x.png

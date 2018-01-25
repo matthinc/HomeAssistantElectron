@@ -79,20 +79,7 @@ function createTray (hass, password, show_sensors) {
       }
     })
 
-    let sensors = []
-    let bins = []
-    if (show_sensors) {
-      sensors = filterDomain(data, 'sensor', true).map(item => {
-        return { label: item.label, enabled: false }
-      })
-      bins = filterDomain(data, 'binary_sensor', true).map(item => {
-        return { label: item.label, enabled: false }
-      })
-    }
-
     let items = [
-      ...sensors,
-      ...bins,
             { label: 'Switches', submenu: switches },
             { label: 'Lights', submenu: lights },
             { label: 'Scenes', submenu: scenes }

@@ -1,6 +1,6 @@
 {
   "name": "home_assistant_electron",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Create Home Assistant Electron app ==================================",
   "main": "index.js",
   "scripts": {
@@ -19,15 +19,12 @@
   },
   "homepage": "https://github.com/matthinc/HomeAssistantElectron#readme",
   "dependencies": {
-    "electron-json-storage": "^3.0.5",
     "electron-settings": "^3.1.1",
     "electron-updater": "^1.16.0",
-    "menubar": "^5.2.3",
-    "node-rest-client": "^3.1.0",
-    "vue": "^2.5.9"
+    "node-rest-client": "^3.1.0"
   },
   "devDependencies": {
-    "electron": "^1.6.5",
+    "electron": "^1.7.11",
     "electron-builder": "^19.22.1"
   }
 }

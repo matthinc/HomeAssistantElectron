@@ -72,24 +72,16 @@
                 <td><span class="prefs">Show notifications</span></td>
             </tr>
             <tr>
-                <td><input id="s1" type="checkbox"></td>
-                <td><span class="prefs">Save window dimensions</span></td>
-            </tr>
-            <tr>
                 <td><input id="s2" type="checkbox"></td>
                 <td><span class="prefs">Create tray menu</span></td>
-            </tr>
-            <tr>
-                <td><input id="s4" type="checkbox"></td>
-                <td><span class="prefs">Show sensors in tray</span></td>
             </tr>
             <tr>
                 <td><input id="s5" type="checkbox"></td>
                 <td><span class="prefs">Don't hide toolbar when scrolling</span></td>
             </tr>
             <tr>
-                <td><input id="s3" type="checkbox" disabled="true"></td>
-                <td><span class="prefs disabled">Kiosk mode</span></td>
+                <td><input id="s3" type="checkbox"></td>
+                <td><span class="prefs">Kiosk mode</span></td>
             </tr>
         </table>
         <br>
@@ -103,22 +95,19 @@
     <script>
             const { remote } = require('electron')
 
-            document.getElementById("s0").checked = remote.getCurrentWindow().settings.get('notifications', false)
-            document.getElementById("s1").checked = remote.getCurrentWindow().settings.get('save_dimensions', false)
-            document.getElementById("s2").checked = remote.getCurrentWindow().settings.get('tray', true)
-            document.getElementById("s4").checked = remote.getCurrentWindow().settings.get('sensors_in_tray', false)
-            document.getElementById("s3").checked = remote.getCurrentWindow().settings.get('kiosk', false)
-            document.getElementById("s5").checked = remote.getCurrentWindow().settings.get('toolbar_always', true)
+            document.getElementById("s0").checked = remote.getCurrentWindow().settings.notifications()
+            document.getElementById("s2").checked = remote.getCurrentWindow().settings.tray()
+            document.getElementById("s3").checked = remote.getCurrentWindow().settings.kiosk()
+            document.getElementById("s5").checked = remote.getCurrentWindow().settings.toolbar()
 
             function save () {
-                remote.getCurrentWindow().saveSettings(
+                remote.getCurrentWindow().settings.setSettings(
                     document.getElementById("s0").checked,
-                    document.getElementById("s1").checked,
                     document.getElementById("s2").checked,
                     document.getElementById("s3").checked,
-                    document.getElementById("s4").checked,
                     document.getElementById("s5").checked
                 )
+                remote.getCurrentWindow().reload()
             }
 
             function reset() {

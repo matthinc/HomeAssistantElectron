@@ -2,14 +2,14 @@ const {remote, ipcRenderer, shell} = require('electron')
 
 window.onload = () => {
   let frame = document.getElementById('content_frame')
-  frame.src = remote.getCurrentWindow().settings.get('url')
+  frame.src = remote.getCurrentWindow().settings.url()
 
     // Remove HTML titlebar on Windows/Linux
   let titlebar = document.getElementById('titlebar')
   if (remote.getCurrentWindow().os !== 'darwin') {
     titlebar.parentNode.removeChild(titlebar)
   } else {
-    titlebar.style.backgroundColor = remote.getCurrentWindow().settings.get('color', '#03A9F4')
+    titlebar.style.backgroundColor = remote.getCurrentWindow().color()
   }
 
   frame.addEventListener('new-window', (event) => {

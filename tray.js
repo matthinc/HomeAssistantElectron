@@ -44,7 +44,7 @@ function filterDomain (states, domain, sensor = false) {
         })
 }
 
-function createTray (hass, password, show_sensors) {
+function createTray (hass, password) {
   if (activeTray) {
     activeTray.destroy()
   }

@@ -1,5 +1,5 @@
 module.exports =  function (darwin, load, setPage) {
-     return [{
+     var menu = [{
           label: 'Go',
           submenu: [
                { label: 'States', accelerator: 'Cmd+1', click: () => setPage('states') },
@@ -21,11 +21,13 @@ module.exports =  function (darwin, load, setPage) {
      }]
      // Mac default menu
      if (darwin) {
-          menuTemplate.unshift({
+          menu.unshift({
                label: 'Home Assistant',
                submenu: [
                     { role: 'about' },
                     { role: 'quit' }]
           })
      }
+
+     return menu
 }

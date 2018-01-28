@@ -118,7 +118,7 @@ function loadHomeAssistantOrLoginPage() {
   if (settings.hasUrl()) {
     load('index.html')
     if (settings.tray()) {
-      TrayInit(settings.url(), settings.password())
+      TrayInit(settings.url(), settings.password(), settings.icon())
     }
   } else {
     load('connect.html')

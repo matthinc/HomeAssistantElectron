@@ -49,6 +49,11 @@
 
         .prefs {
             font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .pref-control {
+            float: right;
         }
 
         .disabled {
@@ -68,20 +73,29 @@
     <div class="container">
         <table>
             <tr>
-                <td><input id="s0" type="checkbox"></td>
+                <td class="pref-control"><input id="s0" type="checkbox"></td>
                 <td><span class="prefs">Show notifications</span></td>
             </tr>
             <tr>
-                <td><input id="s2" type="checkbox"></td>
+                <td class="pref-control"><input id="s2" type="checkbox"></td>
                 <td><span class="prefs">Create tray menu</span></td>
             </tr>
             <tr>
-                <td><input id="s5" type="checkbox"></td>
+                <td class="pref-control"><input id="s5" type="checkbox"></td>
                 <td><span class="prefs">Don't hide toolbar when scrolling</span></td>
             </tr>
             <tr>
-                <td><input id="s3" type="checkbox"></td>
+                <td class="pref-control"><input id="s3" type="checkbox"></td>
                 <td><span class="prefs">Kiosk mode</span></td>
+            </tr>
+            <tr>
+                <td class="pref-control">
+                    <select id="s6" size="1">
+                        <option>White</option>
+                        <option>Black</option>
+                    </select>
+                </td>
+                <td><span class="prefs">Tray icon</span></td>
             </tr>
         </table>
         <br>
@@ -100,12 +114,16 @@
             document.getElementById("s3").checked = remote.getCurrentWindow().settings.kiosk()
             document.getElementById("s5").checked = remote.getCurrentWindow().settings.toolbar()
 
+            let dropdown = document.getElementById("s6")
+            dropdown.value = remote.getCurrentWindow().settings.icon()
+
             function save () {
                 remote.getCurrentWindow().settings.setSettings(
                     document.getElementById("s0").checked,
                     document.getElementById("s2").checked,
                     document.getElementById("s3").checked,
-                    document.getElementById("s5").checked
+                    document.getElementById("s5").checked,
+                    dropdown.options[dropdown.selectedIndex].text
                 )
                 remote.getCurrentWindow().reload()
             }

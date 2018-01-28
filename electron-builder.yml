@@ -10,6 +10,10 @@ files:
 - assets/icon.png
 - assets/tray.png
 - assets/tray@2x.png
+- assets/tray_white.png
+- assets/tray_black.png
+- assets/tray_white@2x.png
+- assets/tray_black@2x.png
 - "node_modules/**/*"
 asar: false
 linux:

@@ -1,6 +1,7 @@
 const Client = require('node-rest-client').Client
 const { app, BrowserWindow, Menu, dialog, shell, Tray } = require('electron')
 const path = require('path')
+const os = require('os')
 
 var client = new Client()
 var activeTray
@@ -44,12 +45,13 @@ function filterDomain (states, domain, sensor = false) {
         })
 }
 
-function createTray (hass, password) {
+function createTray (hass, password, icon) {
   if (activeTray) {
     activeTray.destroy()
   }
 
-  let tray = new Tray(path.join(__dirname, 'assets/tray.png'))
+  //Using @2x for mac-devices prevents some weird retina-issues
+  let tray = new Tray(path.join(__dirname, `assets/tray_${icon}${os.platform() === 'darwin'?'@2x':''}.png`))
   activeTray = tray
 
   client.get(hass + `/api/states?api_password=${password}`, (data, res) => {

@@ -31,7 +31,7 @@ class Settings {
       * @returns true if tray-menu should be shown
       */
      tray() {
-          return settings.has('tray') && settings.get('tray')
+          return settings.get('tray', true)
      }
 
      /**
@@ -53,6 +53,13 @@ class Settings {
       */
      width() {
           return settings.get('width')
+     }
+
+     /**
+      * @returns tray icon
+      */
+     icon() {
+          return settings.get('icon', 'Black')
      }
 
      /**
@@ -121,11 +128,12 @@ class Settings {
       * @param {*} kiosk 
       * @param {*} toolbar 
       */
-     setSettings(notifications, tray, kiosk, toolbar) {
+     setSettings(notifications, tray, kiosk, toolbar, icon) {
           settings.set('notifications', notifications)
           settings.set('tray', tray)
           settings.set('kiosk', kiosk)
           settings.set('toolbar_always', toolbar)
+          settings.set('icon', icon)
      }
 
      /**

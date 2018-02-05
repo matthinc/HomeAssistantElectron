@@ -92,7 +92,7 @@ app.on('activate', () => {
  * Create the application menu
  */
 function createMenu () {
-  const menu = Menu.buildFromTemplate(menuTemplate(os.platform() === 'darwin', load, setPage))
+  const menu = Menu.buildFromTemplate(menuTemplate(browserWindow, os.platform() === 'darwin', load, setPage))
   Menu.setApplicationMenu(menu)
 }
 

@@ -1,4 +1,4 @@
-module.exports =  function (darwin, load, setPage) {
+module.exports =  function (browserWindow, darwin, load, setPage) {
      var menu = [{
           label: 'Go',
           submenu: [

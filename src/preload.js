@@ -17,7 +17,7 @@ function login () {
         // Main view loaded
         if (remote.getCurrentWindow().settings.toolbar()) {
           // Always show toolbar
-          main.shadowRoot.querySelector('#drawer')
+          main.shadowRoot.querySelector('app-drawer-layout')
           .querySelector('iron-pages')
           .querySelector('partial-cards')
           .shadowRoot.querySelector('ha-app-layout')

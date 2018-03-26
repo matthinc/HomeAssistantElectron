@@ -68,8 +68,8 @@ function setPage (page) {
   document
     .querySelector('home-assistant').shadowRoot
     .querySelector('home-assistant-main').shadowRoot
-    .querySelector('paper-drawer-panel')
-    .querySelector('ha-sidebar')
+    .querySelector('app-drawer-layout')
+	  .querySelector('ha-sidebar')
     .selectPanel(page)
 }
 

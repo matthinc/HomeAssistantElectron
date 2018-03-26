@@ -5,5 +5,5 @@ The Home Assistant Electron app is based on [Electron](https://electron.atom.io/
 
 You can find the releases [here](https://github.com/matthinc/HomeAssistantElectron/releases).
 
-![](https://abload.de/img/home_assistantsfu4h.png)
+![](https://abload.de/img/homeassistantelectron1jui9.png)
 

@@ -18,25 +18,24 @@ function createWindow () {
     width: 800
   })
 
-
   browserWindow.os = os.platform()
   browserWindow.settings = settings
 
   loadHomeAssistantOrLoginPage()
 
-  //Change window dimensions if provided
+  // Change window dimensions if provided
   if (settings.hasDimensions()) {
     browserWindow.setContentSize(settings.width(), settings.height(), false)
   }
 
-  //Change window position if provided
+  // Change window position if provided
   if (settings.hasPosition()) {
     browserWindow.setPosition(settings.xpos(), settings.ypos())
   }
 
   createMenu()
 
-  //Connect to home assistant
+  // Connect to home assistant
   browserWindow.connect = (url, password) => {
     browserWindow.url = url
     browserWindow.password = password
@@ -44,17 +43,17 @@ function createWindow () {
     loadHomeAssistantOrLoginPage()
   }
 
-  //Save settings and reconnect to home assistant
+  // Save settings and reconnect to home assistant
   browserWindow.reload = () => {
     loadHomeAssistantOrLoginPage()
   }
 
-  //Notifiy UI that the theme color has changed
+  // Notifiy UI that the theme color has changed
   browserWindow.setColor = (color) => {
     browserWindow.webContents.send('colorChange', {color})
   }
 
-  //Reset EVERYTHING
+  // Reset EVERYTHING
   browserWindow.reset = () => {
     settings.deleteAll()
     app.quit()
@@ -66,7 +65,7 @@ function createWindow () {
     browserWindow = null
   })
 
-  //Save window bounds on close
+  // Save window bounds on close
   browserWindow.on('close', () => {
     settings.saveWindowBounds(browserWindow.getPosition()[0], browserWindow.getPosition()[1],
       browserWindow.getBounds().width, browserWindow.getBounds().height)
@@ -75,7 +74,7 @@ function createWindow () {
 
 app.on('ready', createWindow)
 
-//Just OSX-Stuff
+// Just OSX-Stuff
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -89,6 +88,15 @@ app.on('activate', () => {
 })
 
 /**
+ * Fake basic-auth
+ */
+app.on('login', function (event, webContents, request, authInfo, callback) {
+  event.preventDefault()
+  let credentials = settings.configuratorCredentials()
+  callback(credentials.username, credentials.password)
+})
+
+/**
  * Create the application menu
  */
 function createMenu () {
@@ -96,7 +104,7 @@ function createMenu () {
   Menu.setApplicationMenu(menu)
 }
 
-//Load a HTML page
+// Load a HTML page
 function load (html) {
   browserWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'src', html),
@@ -105,13 +113,13 @@ function load (html) {
   }))
 }
 
-//Switch HomeAssistant page (eg. State)
+// Switch HomeAssistant page (eg. State)
 function setPage (page) {
   browserWindow.webContents.send('change', { page })
 }
 
-//Load HomeAssistant or configuration view
-function loadHomeAssistantOrLoginPage() {
+// Load HomeAssistant or configuration view
+function loadHomeAssistantOrLoginPage () {
   if (settings.kiosk()) {
     browserWindow.setFullScreen(true)
   }

@@ -50,8 +50,8 @@ function createTray (hass, password, icon) {
     activeTray.destroy()
   }
 
-  //Using @2x for mac-devices prevents some weird retina-issues
-  let tray = new Tray(path.join(__dirname, `assets/tray_${icon}${os.platform() === 'darwin'?'@2x':''}.png`))
+  // Using @2x for mac-devices prevents some weird retina-issues
+  let tray = new Tray(path.join(__dirname, `assets/tray_${icon}${os.platform() === 'darwin' ? '@2x' : ''}.png`))
   activeTray = tray
 
   client.get(hass + `/api/states?api_password=${password}`, (data, res) => {

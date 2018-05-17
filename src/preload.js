@@ -8,33 +8,32 @@ const {remote, ipcRenderer} = require('electron')
 function login () {
   var password = remote.getCurrentWindow().settings.password()
   var notifications = remote.getCurrentWindow().settings.notifications()
-    document.querySelector('home-assistant').shadowRoot.querySelector('login-form').password = password
-    document.querySelector('home-assistant').shadowRoot.querySelector('login-form').validatePassword()
-    let interval = setInterval(() => {
-      
-      let main = document.querySelector('home-assistant').shadowRoot.querySelector('home-assistant-main')
-      if (main) {
+  document.querySelector('home-assistant').shadowRoot.querySelector('login-form').password = password
+  document.querySelector('home-assistant').shadowRoot.querySelector('login-form').validatePassword()
+  let interval = setInterval(() => {
+    let main = document.querySelector('home-assistant').shadowRoot.querySelector('home-assistant-main')
+    if (main) {
         // Main view loaded
-        if (remote.getCurrentWindow().settings.toolbar()) {
+      if (remote.getCurrentWindow().settings.toolbar()) {
           // Always show toolbar
-          main.shadowRoot.querySelector('app-drawer-layout')
+        main.shadowRoot.querySelector('app-drawer-layout')
           .querySelector('iron-pages')
           .querySelector('partial-cards')
           .shadowRoot.querySelector('ha-app-layout')
           .querySelector('app-header')
           .removeAttribute('condenses')
-        }
-        // Get color
-        let hass = document.querySelector('home-assistant')
-        remote.getCurrentWindow().setColor(getComputedStyle(hass).getPropertyValue('--primary-color'))
-
-        var observer = new MutationObserver(function (mutations) {
-          remote.getCurrentWindow().setColor(getComputedStyle(main).getPropertyValue('--primary-color'))
-        })
-        observer.observe(hass, { attributes: true, attributeFilter: ['style'] })
-        clearInterval(interval)
       }
-    }, 100)
+        // Get color
+      let hass = document.querySelector('home-assistant')
+      remote.getCurrentWindow().setColor(getComputedStyle(hass).getPropertyValue('--primary-color'))
+
+      var observer = new MutationObserver(function (mutations) {
+        remote.getCurrentWindow().setColor(getComputedStyle(main).getPropertyValue('--primary-color'))
+      })
+      observer.observe(hass, { attributes: true, attributeFilter: ['style'] })
+      clearInterval(interval)
+    }
+  }, 100)
 
   if (notifications) {
     getNotifications()

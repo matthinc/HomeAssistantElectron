@@ -89,6 +89,10 @@
                 <td><span class="prefs">Kiosk mode</span></td>
             </tr>
             <tr>
+                    <td class="pref-control"><input id="cu"><br><input id="cp" type="password" ></td>
+                    <td><span class="prefs">Credentials for the Configurator addon</span></td>
+            </tr>
+            <tr>
                 <td class="pref-control">
                     <select id="s6" size="1">
                         <option>White</option>
@@ -113,6 +117,8 @@
             document.getElementById("s2").checked = remote.getCurrentWindow().settings.tray()
             document.getElementById("s3").checked = remote.getCurrentWindow().settings.kiosk()
             document.getElementById("s5").checked = remote.getCurrentWindow().settings.toolbar()
+            document.getElementById("cu").value = remote.getCurrentWindow().settings.configuratorCredentials().username
+            document.getElementById("cp").value = remote.getCurrentWindow().settings.configuratorCredentials().password
 
             let dropdown = document.getElementById("s6")
             dropdown.value = remote.getCurrentWindow().settings.icon()
@@ -123,7 +129,9 @@
                     document.getElementById("s2").checked,
                     document.getElementById("s3").checked,
                     document.getElementById("s5").checked,
-                    dropdown.options[dropdown.selectedIndex].text
+                    dropdown.options[dropdown.selectedIndex].text,
+                    document.getElementById("cu").value,
+                    document.getElementById("cp").value
                 )
                 remote.getCurrentWindow().reload()
             }

@@ -43,6 +43,15 @@ function filterDomain (states, domain, sensor = false) {
           item.label = label
           return item
         })
+        .sort((e1, e2) => {
+          if (e1.label.toUpperCase() < e2.label.toUpperCase()) {
+            return -1
+          }
+          if (e1.label.toUpperCase() > e2.label.toUpperCase()) {
+            return 1
+          }
+          return 0
+        })
 }
 
 function createTray (hass, password, icon) {
